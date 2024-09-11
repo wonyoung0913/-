@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}게시글 수정{% endblock %}
+
+{% block page_content %}
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <div class="form-group">
+        {{ form.subject.label }}
+        {{ form.subject(class="form-control") }}
+    </div>
+    <div class="form-group">
+        {{ form.body.label }}
+        {{ form.body(class="form-control") }}
+    </div>
+    <div class="form-group">
+        {{ form.submit(class="btn btn-primary") }}
+    </div>
+</form>
+{% endblock %}

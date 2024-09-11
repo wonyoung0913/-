@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}My Blog - 회원가입{% endblock %}
+
+{% block page_content %}
+<div class="container my-3">
+    <div class="page-header">
+        <h5>회원등록</h5>
+    </div>
+    <div class="col-md-5">
+        <form method="post" class="post-form">
+            {{ form.csrf_token }}
+
+            <div class="form-group">
+                <label for="{{ form.username.id }}">닉네임(영문, 숫자와 _만 사용가능)</label>
+                {{ form.username(class='form-control') }}
+            </div>
+
+
+            <div class="form-group">
+                <label for="{{ form.email.id }}">아이디(이메일 형식) </label> 
+                {{ form.email(class='form-control') }}
+            </div>           
+
+            
+
+            <div class="form-group">
+                {{ form.password.label }}
+                {{ form.password (class='form-control') }}
+            </div>
+
+            <div class="form-group">
+                {{ form.password2.label }}
+                {{ form.password2 (class='form-control') }}
+            </div>
+
+            <div class="form-group">
+                {{ form.submit(class='btn btn-primary') }}
+            </div>
+
+        </form>
+    </div>
+</div>
+{% endblock %}

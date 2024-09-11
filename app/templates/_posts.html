@@ -1,0 +1,48 @@
+<ul class="posts">              
+    {% for post in posts %}      
+    <li class="post">
+        <div class="post-content">
+            <div class="post-body h5">
+                <a href="{{ url_for('main.post_reply', post_id=post.id) }}" style="font-size: 1.4em; color: black;">
+                    제목: {{ post.subject }}
+                </a>
+                {% if post.replies|length > 0 %}
+                    <span class="text-danger small ml-2">{{ post.replies|length }}</span>
+                {% endif %}            
+            </div>
+            <div class="post-body">작성내용: <br>{{ post.body_html | safe }}</div>           
+            
+            <div class="profile-thumbnail"> 
+                <div>
+                    <a href="{{ url_for('.user', username=post.author.username) }}">
+                        <img class="img-rounded" src="{{ post.author.gravatar(size=40) }}">
+                    </a>
+                </div>
+                {% if post.like|length > 0 %}                       
+                    <div class="card text-center p-1 mt-1 small">
+                        {{ post.like | length }}<br/>추천
+                    </div>
+                {% endif %}
+                <div class="post-author">작성자: {{ post.author.username }}</div><br>
+                <div class="post-date" style="font-size: 0.8em; color: rgb(147, 143, 143);">
+                    작성일자: {{ moment(post.timestamp).fromNow() }}
+                </div> 
+            </div> 
+
+            {% if current_user.is_authenticated and (post.author_id == current_user.id or current_user.is_administrator()) %}
+                <div class="post-actions">
+                    <a href="{{ url_for('main.edit_post', post_id=post.id) }}" class="btn btn-warning btn-sm">수정</a>
+                    <form action="{{ url_for('main.delete_post', post_id=post.id) }}" method="post" style="display:inline;">
+                        {% if form %}
+                            {{ form.hidden_tag() }} <!-- CSRF 보호를 위해 추가 -->
+                        {% endif %}
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('정말로 삭제하시겠습니까?');">삭제</button>
+                    </form>
+                </div>
+            {% endif %}
+            
+            <hr style="border: 1px solid #ddd; margin: 20px 0;">
+        </div>
+    </li>
+    {% endfor %}
+</ul>

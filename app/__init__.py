@@ -49,6 +49,4 @@ def create_app(config_name):
     app.jinja_env.filters['datetime'] = format_datetime
     app.jinja_env.filters['date'] = format_date
 
-    if __name__ == '__main__':  
-        app.run('0.0.0.0',port=5000,debug=True)
     return app
